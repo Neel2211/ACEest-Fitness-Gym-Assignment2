@@ -13,3 +13,21 @@ Docker Image Build
 Docker Hub Push 
 ↓ 
 Deployment Validation
+
+Target Assignment 2 CI Pipeline 
+
+GitHub 
+↓ 
+Checkout Source Code 
+↓ 
+Pytest Validation 
+↓ 
+SonarQube Static Analysis 
+↓ 
+Quality Gate 
+↓ 
+Docker Build 
+↓ 
+Docker Hub Push 
+↓ 
+Deployment Validation
