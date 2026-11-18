@@ -1,0 +1,217 @@
+Started by an SCM change
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins
+ in /var/lib/jenkins/workspace/ACEest-Assignment2-CI
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/ACEest-Assignment2-CI/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Neel2211/ACEest-Fitness-Gym-Assignment2.git # timeout=10
+Fetching upstream changes from https://github.com/Neel2211/ACEest-Fitness-Gym-Assignment2.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.43.5'
+ > git fetch --tags --force --progress -- https://github.com/Neel2211/ACEest-Fitness-Gym-Assignment2.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 2b1fbadfebf7fd872279bd661be10a24d726be7b (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 2b1fbadfebf7fd872279bd661be10a24d726be7b # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 2b1fbadfebf7fd872279bd661be10a24d726be7b # timeout=10
+Commit message: "Test Jenkins automatic build trigger"
+ > git rev-list --no-walk 1c3588f7cb65c2a149f4287a1d37c06bf2fad9db # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Environment Validation)
+[Pipeline] sh
++ python3 --version
+Python 3.9.21
+[Pipeline] sh
++ git --version
+git version 2.43.5
+[Pipeline] sh
++ docker --version
+Docker version 27.5.1, build 9f9e405
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Dependencies)
+[Pipeline] sh
++ python3 -m ensurepip --default-pip
+Defaulting to user installation because normal site-packages is not writeable
+Looking in links: /tmp/tmpjmzb7qrn
+Requirement already satisfied: setuptools in /usr/lib/python3.9/site-packages (53.0.0)
+Requirement already satisfied: pip in /var/lib/jenkins/.local/lib/python3.9/site-packages (21.3.1)
+[Pipeline] sh
++ python3 -m pip install --user -r requirements.txt
+Requirement already satisfied: Flask==3.0.3 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from -r requirements.txt (line 1)) (3.0.3)
+Requirement already satisfied: pytest==8.3.3 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from -r requirements.txt (line 2)) (8.3.3)
+Requirement already satisfied: gunicorn==23.0.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from -r requirements.txt (line 3)) (23.0.0)
+Requirement already satisfied: flake8==7.1.1 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from -r requirements.txt (line 4)) (7.1.1)
+Requirement already satisfied: itsdangerous>=2.1.2 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Flask==3.0.3->-r requirements.txt (line 1)) (2.2.0)
+Requirement already satisfied: Werkzeug>=3.0.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Flask==3.0.3->-r requirements.txt (line 1)) (3.1.9)
+Requirement already satisfied: importlib-metadata>=3.6.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Flask==3.0.3->-r requirements.txt (line 1)) (8.7.1)
+Requirement already satisfied: click>=8.1.3 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Flask==3.0.3->-r requirements.txt (line 1)) (8.1.8)
+Requirement already satisfied: blinker>=1.6.2 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Flask==3.0.3->-r requirements.txt (line 1)) (1.9.0)
+Requirement already satisfied: Jinja2>=3.1.2 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Flask==3.0.3->-r requirements.txt (line 1)) (3.1.6)
+Requirement already satisfied: packaging in /var/lib/jenkins/.local/lib/python3.9/site-packages (from pytest==8.3.3->-r requirements.txt (line 2)) (26.3)
+Requirement already satisfied: tomli>=1 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from pytest==8.3.3->-r requirements.txt (line 2)) (2.5.0)
+Requirement already satisfied: pluggy<2,>=1.5 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from pytest==8.3.3->-r requirements.txt (line 2)) (1.6.0)
+Requirement already satisfied: exceptiongroup>=1.0.0rc8 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from pytest==8.3.3->-r requirements.txt (line 2)) (1.3.1)
+Requirement already satisfied: iniconfig in /var/lib/jenkins/.local/lib/python3.9/site-packages (from pytest==8.3.3->-r requirements.txt (line 2)) (2.1.0)
+Requirement already satisfied: pyflakes<3.3.0,>=3.2.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from flake8==7.1.1->-r requirements.txt (line 4)) (3.2.0)
+Requirement already satisfied: pycodestyle<2.13.0,>=2.12.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from flake8==7.1.1->-r requirements.txt (line 4)) (2.12.1)
+Requirement already satisfied: mccabe<0.8.0,>=0.7.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from flake8==7.1.1->-r requirements.txt (line 4)) (0.7.0)
+Requirement already satisfied: typing-extensions>=4.6.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from exceptiongroup>=1.0.0rc8->pytest==8.3.3->-r requirements.txt (line 2)) (4.16.0)
+Requirement already satisfied: zipp>=3.20 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from importlib-metadata>=3.6.0->Flask==3.0.3->-r requirements.txt (line 1)) (3.23.1)
+Requirement already satisfied: MarkupSafe>=2.0 in /var/lib/jenkins/.local/lib/python3.9/site-packages (from Jinja2>=3.1.2->Flask==3.0.3->-r requirements.txt (line 1)) (3.0.4)
+WARNING: You are using pip version 21.3.1; however, version 26.0.1 is available.
+You should consider upgrading via the '/usr/bin/python3 -m pip install --upgrade pip' command.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Tests)
+[Pipeline] sh
++ python3 -m pytest
+============================= test session starts ==============================
+platform linux -- Python 3.9.21, pytest-8.3.3, pluggy-1.6.0
+rootdir: /var/lib/jenkins/workspace/ACEest-Assignment2-CI
+collected 8 items
+
+tests/test_app.py ........                                               [100%]
+
+============================== 8 passed in 0.27s ===============================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] tool
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: ACEest-SonarQube
+[Pipeline] {
+[Pipeline] sh
++ /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/bin/sonar-scanner -Dsonar.projectKey=aceest-fitness-gym-assignment2 -Dsonar.sources=. -Dsonar.tests=tests
+16:41:18.404 INFO  Scanner configuration file: /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarScanner/conf/sonar-scanner.properties
+16:41:18.409 INFO  Project root configuration file: /var/lib/jenkins/workspace/ACEest-Assignment2-CI/sonar-project.properties
+16:41:18.451 INFO  SonarScanner CLI 8.4.0.16527
+16:41:18.469 INFO  Linux 5.14.0-503.21.1.el9_5.x86_64 amd64
+16:41:21.015 INFO  Communicating with SonarQube Server 9.9.8.100196
+16:41:22.386 INFO  Load global settings
+16:41:22.626 INFO  Load global settings (done) | time=249ms
+16:41:22.637 INFO  Server id: 147B411E-AaHuN-04yMmPwKPTUqTw
+16:41:22.680 INFO  User cache: /var/lib/jenkins/.sonar/cache
+16:41:22.697 INFO  Load/download plugins
+16:41:22.697 INFO  Load plugins index
+16:41:22.860 INFO  Load plugins index (done) | time=163ms
+16:41:23.089 INFO  Load/download plugins (done) | time=393ms
+16:41:24.339 INFO  Process project properties
+16:41:24.356 INFO  Process project properties (done) | time=16ms
+16:41:24.367 INFO  Execute project builders
+16:41:24.369 INFO  Execute project builders (done) | time=2ms
+16:41:24.376 INFO  Project key: aceest-fitness-gym-assignment2
+16:41:24.376 INFO  Base dir: /var/lib/jenkins/workspace/ACEest-Assignment2-CI
+16:41:24.376 INFO  Working dir: /var/lib/jenkins/workspace/ACEest-Assignment2-CI/.scannerwork
+16:41:24.403 INFO  Load project settings for component key: 'aceest-fitness-gym-assignment2'
+16:41:24.482 INFO  Load project settings for component key: 'aceest-fitness-gym-assignment2' (done) | time=79ms
+16:41:25.193 INFO  Auto-configuring with CI 'Jenkins'
+16:41:25.223 INFO  Load quality profiles
+16:41:25.381 INFO  Load quality profiles (done) | time=157ms
+16:41:25.452 INFO  Load active rules
+16:41:32.747 INFO  Load active rules (done) | time=7294ms
+16:41:32.799 INFO  Load analysis cache
+16:41:32.891 INFO  Load analysis cache (3.1 kB) | time=91ms
+16:41:33.341 INFO  Load project repositories
+16:41:33.400 INFO  Load project repositories (done) | time=59ms
+16:41:33.503 INFO  Indexing files...
+16:41:33.504 INFO  Project configuration:
+16:41:33.505 INFO    Excluded sources: venv/**, legacy_versions/**, tests/**
+16:41:33.505 INFO    Included tests: tests/**
+16:41:33.891 INFO  14 files indexed
+16:41:33.900 INFO  14 files ignored because of inclusion/exclusion patterns
+16:41:33.900 INFO  0 files ignored because of scm ignore settings
+16:41:33.907 INFO  Quality profile for py: Sonar way
+16:41:33.908 INFO  ------------- Run sensors on module ACEest Fitness Gym Assignment 2
+16:41:34.195 INFO  Load metrics repository
+16:41:34.282 INFO  Load metrics repository (done) | time=87ms
+16:41:38.208 INFO  Sensor Python Sensor [python]
+16:41:38.245 INFO  Starting global symbols computation
+16:41:38.291 INFO  1 source file to be analyzed
+16:41:39.338 INFO  1/1 source file has been analyzed
+16:41:39.415 INFO  Starting rules execution
+16:41:39.437 INFO  3 source files to be analyzed
+16:41:40.331 INFO  3/3 source files have been analyzed
+16:41:40.332 INFO  The Python analyzer was able to leverage cached data from previous analyses for 0 out of 3 files. These files were not parsed.
+16:41:40.332 INFO  Sensor Python Sensor [python] (done) | time=2125ms
+16:41:40.333 INFO  Sensor Cobertura Sensor for Python coverage [python]
+16:41:40.382 INFO  Sensor Cobertura Sensor for Python coverage [python] (done) | time=49ms
+16:41:40.383 INFO  Sensor PythonXUnitSensor [python]
+16:41:40.404 INFO  Sensor PythonXUnitSensor [python] (done) | time=21ms
+16:41:40.405 INFO  Sensor JaCoCo XML Report Importer [jacoco]
+16:41:40.408 INFO  'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+16:41:40.412 INFO  No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+16:41:40.413 INFO  Sensor JaCoCo XML Report Importer [jacoco] (done) | time=9ms
+16:41:40.414 INFO  Sensor CSS Rules [javascript]
+16:41:40.415 INFO  No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+16:41:40.415 INFO  Sensor CSS Rules [javascript] (done) | time=1ms
+16:41:40.415 INFO  Sensor C# Project Type Information [csharp]
+16:41:40.416 INFO  Sensor C# Project Type Information [csharp] (done) | time=1ms
+16:41:40.417 INFO  Sensor C# Analysis Log [csharp]
+16:41:40.455 INFO  Sensor C# Analysis Log [csharp] (done) | time=38ms
+16:41:40.456 INFO  Sensor C# Properties [csharp]
+16:41:40.456 INFO  Sensor C# Properties [csharp] (done) | time=0ms
+16:41:40.456 INFO  Sensor HTML [web]
+16:41:40.464 INFO  Sensor HTML [web] (done) | time=8ms
+16:41:40.465 INFO  Sensor TextAndSecretsSensor [text]
+16:41:40.516 INFO  3 source files to be analyzed
+16:41:40.532 INFO  3/3 source files have been analyzed
+16:41:40.533 INFO  Sensor TextAndSecretsSensor [text] (done) | time=68ms
+16:41:40.533 INFO  Sensor VB.NET Project Type Information [vbnet]
+16:41:40.534 INFO  Sensor VB.NET Project Type Information [vbnet] (done) | time=1ms
+16:41:40.534 INFO  Sensor VB.NET Analysis Log [vbnet]
+16:41:40.559 INFO  Sensor VB.NET Analysis Log [vbnet] (done) | time=25ms
+16:41:40.559 INFO  Sensor VB.NET Properties [vbnet]
+16:41:40.559 INFO  Sensor VB.NET Properties [vbnet] (done) | time=0ms
+16:41:40.559 INFO  Sensor IaC Docker Sensor [iac]
+16:41:40.576 INFO  1 source file to be analyzed
+16:41:40.783 INFO  1/1 source file has been analyzed
+16:41:40.784 INFO  Sensor IaC Docker Sensor [iac] (done) | time=225ms
+16:41:40.790 INFO  ------------- Run sensors on project
+16:41:40.947 INFO  Sensor Analysis Warnings import [csharp]
+16:41:40.949 INFO  Sensor Analysis Warnings import [csharp] (done) | time=2ms
+16:41:40.949 INFO  Sensor Zero Coverage Sensor
+16:41:40.960 INFO  Sensor Zero Coverage Sensor (done) | time=11ms
+16:41:40.987 INFO  CPD Executor Calculating CPD for 1 file
+16:41:40.999 INFO  CPD Executor CPD calculation finished (done) | time=12ms
+16:41:41.232 INFO  Analysis report generated in 228ms, dir size=134.7 kB
+16:41:41.299 INFO  Analysis report compressed in 67ms, zip size=24.8 kB
+16:41:41.403 INFO  Analysis report uploaded in 103ms
+16:41:41.405 INFO  ANALYSIS SUCCESSFUL, you can find the results at: http://localhost:9000/dashboard?id=aceest-fitness-gym-assignment2
+16:41:41.406 INFO  Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+16:41:41.406 INFO  More about the report processing at http://localhost:9000/api/ce/task?id=AaHuWvdFyMmPwKPTU0NV
+16:41:41.466 INFO  Analysis total time: 18.123 s
+16:41:41.469 INFO  EXECUTION SUCCESS
+16:41:41.470 INFO  Total time: 23.170s
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Build completed successfully
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
