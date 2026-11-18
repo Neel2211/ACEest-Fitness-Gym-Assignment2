@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2026-11-18T11:53:37Z"
+  labels:
+    app: aceest-app
+  name: aceest-app
+  namespace: default
+  resourceVersion: "581"
+  uid: ab057fac-34b6-4e41-b005-7786ac1a4171
+spec:
+  clusterIP: 10.99.156.26
+  clusterIPs:
+  - 10.99.156.26
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30265
+    port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: aceest-app
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
