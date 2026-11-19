@@ -5,8 +5,15 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Neel2211/ACEest-Fitness-Gym-Assignment2.git'
+                checkout scm
+            }
+        }
+
+        stage('Environment Validation') {
+            steps {
+                sh 'python3 --version'
+                sh 'git --version'
+                sh 'docker --version'
             }
         }
 
@@ -35,9 +42,24 @@ pipeline {
             }
         }
 
+        stage('Read Version') {
+            steps {
+                script {
+                    env.APP_VERSION = sh(
+                        script: 'cat VERSION',
+                        returnStdout: true
+                    ).trim()
+
+                    echo "Building version: ${env.APP_VERSION}"
+                }
+            }
+        }
+
         stage('Docker Build') {
             steps {
-                sh 'docker build -t aceest-fitness-gym:v3.2.4 .'
+                sh """
+                docker build -t aceest-fitness-gym:${env.APP_VERSION} .
+                """
             }
         }
 
@@ -50,13 +72,26 @@ pipeline {
                         passwordVariable: 'DOCKER_PASS'
                     )
                 ]) {
-                    sh '''
-                    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    docker tag aceest-fitness-gym:v3.2.4 neel72211/aceest-fitness-gym:v3.2.4
-                    docker push neel72211/aceest-fitness-gym:v3.2.4
-                    '''
+                    sh """
+                    echo "${DOCKER_PASS}" | docker login -u "${DOCKER_USER}" --password-stdin
+
+                    docker tag aceest-fitness-gym:${env.APP_VERSION} \
+                    neel72211/aceest-fitness-gym:${env.APP_VERSION}
+
+                    docker push neel72211/aceest-fitness-gym:${env.APP_VERSION}
+                    """
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build completed successfully'
+        }
+
+        failure {
+            echo 'Build failed'
         }
     }
 }
