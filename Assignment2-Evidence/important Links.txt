@@ -1,9 +1,19 @@
+ACEest Fitness & Gym - Assignment 2
+
+Student: Neel Gujar
+BITS ID: 2025TM93111
+
 GitHub Repository:
 https://github.com/Neel2211/ACEest-Fitness-Gym-Assignment2.git
 
 DockerHub Repository:
 https://hub.docker.com/repository/docker/neel72211/aceest-fitness-gym/general
 
-Recording Link:
+Demo Recording Link:
 https://drive.google.com/file/d/1kG5knB9RRzc3ND7zRUqWVKjqFpev7PIv/view?usp=sharing
 
+Kubernetes Application Endpoint (Minikube During Demonstration)
+http://192.168.49.2:30265
+
+Note:
+This endpoint was generated from the Minikube environment during assignment execution and demonstration.
